@@ -1,12 +1,12 @@
-##hm-influxdb
+## hm-influxdb
 is an Addon for your ccu3 oder rasberrymatic to automatic log datapoints into an influx database
 
-###Installation
+### Installation
 Download the addon and install it via system preferences on to your ccu
 
-###Configuration
+### Configuration
 
-Open the settings page via plugin settings or http://ccuip:9501/
+Open the settings page via plugin settings or http://ccuip:9501/ (please make sure the firewall at your ccu will not block this port)
 
 First setup the influx db database:
 * enter the host or ip of your database
@@ -33,7 +33,7 @@ Please do not forget to save your settings.
 
 
 
-###Internals
+### Internals
 
 The addon will build a queue of 50 entries before it will save all these entries to the database. This is to prevent your network and influx server from frequent querys.
 Due to this queue your logging entries may be delayed a little bit, but dont worrie the timestamp is correct.
