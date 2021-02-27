@@ -1,5 +1,5 @@
 ## hm-influxdb
-is an Addon for your ccu3 oder rasberrymatic to automatic log datapoints into an influx database
+is an addon for your ccu3 or rasberrymatic to automatic log datapoints into an influx database
 
 ### Installation
 Download the addon and install it via system preferences on to your ccu
