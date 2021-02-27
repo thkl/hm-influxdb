@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <base href="./">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Homematic Influx DB Logger</title>
+    <meta name="theme-color" content="#ffffff">
+    <!-- Main styles for this application-->
+    <link href="/static/css/application.css" rel="stylesheet">
+    <link href="/static/css/style.min.css" rel="stylesheet">
+ 
+  </head>
+  <body class="c-app">
+    <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
+      <div class="c-sidebar-brand d-lg-down-none">HM-InfluxDB
+
+    </div>
+      <ul class="c-sidebar-nav">
+        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link active" id="btnDatabase">Database</a></li>
+        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" id="btnCCU">CCU</a></li>
+      </ul>
+    </div>
+    <div class="c-wrapper c-fixed-components">
+ 
+      <div class="c-body">
+        <main class="c-main">
+          <div class="container-fluid">
+            <div class="fade-in">
+              <div class="card">
+                <div class="card-body" id="content">
+                  
+                </div>
+                <div class="card-footer" id="footer">
+                </div>
+              </div>
+              <!-- /.row-->
+            </div>
+          </div>
+        </main>
+        <footer class="c-footer">
+
+        </footer>
+      </div>
+    </div>
+    <!-- CoreUI and necessary plugins-->
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/treeview.min.js"></script>
+    <script src="/static/js/coreui.bundle.min.js"></script>
+    <script type="module">
+      import { Admin } from '/static/js/admin.js'
+      let app =  new Admin()
+      app.run()
+    </script>
+  </body>
+</html>

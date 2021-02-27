@@ -1,0 +1,61 @@
+#!/bin/sh
+
+ADDONNAME=hm-influxdb
+CONFIG_DIR=/usr/local/etc/config
+ADDON_DIR=/usr/local/addons/${ADDONNAME}
+ADDONWWW_DIR=/usr/local/etc/config/addons/www
+ADDONCFG_DIR=${CONFIG_DIR}/addons/${ADDONNAME}
+RCD_DIR=${CONFIG_DIR}/rc.d
+LOGFILE=/var/log/${ADDONNAME}install.log
+# make sure this addon is only executed on
+# supported platforms
+
+if [ "$1" == "HM-RASPBERRYMATIC" ]  || [ "$1" == "CCU3" ] ; then
+
+mount | grep /usr/local 2>&1 >/dev/null
+if [ $? -eq 1 ]; then
+  mount /usr/local
+fi
+
+echo "[Installer]creating folders " >>${LOGFILE}
+
+# create necessary directories
+mkdir -p ${ADDON_DIR}
+chmod 755 ${ADDON_DIR}
+mkdir -p ${RCD_DIR}
+chmod 755 ${RCD_DIR}
+mkdir -p ${ADDONCFG_DIR}
+
+# copy addon
+echo "[Installer]copying files " >>${LOGFILE}
+
+#create the www stuff
+mkdir -p ${ADDONWWW_DIR}/${ADDONNAME}
+cp -af www/index.html ${ADDONWWW_DIR}/${ADDONNAME}
+cp -af www/update-check.cgi ${ADDONWWW_DIR}/${ADDONNAME}
+cp -af www/hm-influxdb-logo.png ${ADDONWWW_DIR}/${ADDONNAME}
+
+echo "[Installer]copying launcher rc.d/${ADDONNAME} to ${RCD_DIR}" >>${LOGFILE}
+
+# copy startup script
+cp -af rc.d/${ADDONNAME} ${RCD_DIR}
+# copy the js stuff
+cp -af js/* ${ADDON_DIR}
+
+echo "[Installer]make launcher ${RCD_DIR}/${ADDONNAME} excutable  " >>${LOGFILE}
+
+#build system launcher
+chmod +x ${RCD_DIR}/${ADDONNAME}
+chmod +x ${ADDONWWW_DIR}/${ADDONNAME}/update-check.cgi
+cd ${ADDON_DIR}
+echo "[Installer]install depencities " >>${LOGFILE}
+npm install
+
+sync
+
+echo "[Startup]" >>${LOGFILE}
+/etc/config/rc.d/hm-influxdb start
+
+exit 0
+
+fi

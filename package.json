@@ -1,0 +1,17 @@
+{
+  "name": "hm-influxdb",
+  "version": "0.0.1",
+  "description": "a logging addon",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "th.kluge@me.com",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^6.2.1",
+    "express": "4.17.1",
+    "hm-interface": "latest",
+    "influx": "5.6.3"
+  }
+}

@@ -1,0 +1,75 @@
+#!/bin/sh
+ADDON_NAME=hm-influxdb
+APPDIR=/usr/local/addons/hm-influxdb/
+CONFIG_URL=/addons/hm-influxdb/index.html
+CONFIG_DIR=/usr/local/etc/config
+ADDONCFG_DIR=${CONFIG_DIR}/addons/${ADDON_NAME}
+PIDFILE=/var/run/hm-influxdb.pid 
+VER=0.0.1
+EXEC=node
+EXECARGS=$APPDIR/index.js >/var/log/hm-influxdb.log
+
+do_start()
+{
+	start-stop-daemon --start --quiet --oknodo --make-pidfile --background  --pidfile $PIDFILE --exec $EXEC $EXECARGS
+	logger -t homematic -p user.info "start hm-influxdb"
+}
+
+do_stop()
+{
+    start-stop-daemon --stop --quiet  --oknodo  --retry 5  --pidfile $PIDFILE
+
+    if [ -e $PIDFILE ];then
+      rm -f $PIDFILE
+    fi
+  	
+	logger -t homematic -p user.info "stopped hm-influxdb"
+}
+
+
+case "$1" in
+  ""|start)
+
+	do_start
+	
+	;;
+
+  stop)
+	
+	do_stop
+	
+	;;
+
+  restart)
+  	
+	do_stop
+	sleep 10
+	do_start
+	
+	;;
+
+  info)
+	echo "Info: <center><b>Homematic Influx Logger</b><p style='margin-top: 5px;margin-bottom: 5px;'><img src='../addons/hm-influxdb/hm-influxdb-logo.png'></p></center>Logs Data to an influxdb<br />"
+	echo "Name: hm-influxdb"
+	echo "Version: $VER"
+	echo "Operations: uninstall restart"
+	echo "Config-Url: $CONFIG_URL"
+	echo "Update: /addons/${ADDON_NAME}/update-check.cgi"
+	;;
+
+  uninstall)
+	logger -t homematic -p user.info "removing hm-influxdb"
+	kill -KILL $PSPID 2>/dev/null
+	rm -R /usr/local/addons/hm-influxdb/
+    rm /usr/local/etc/config/rc.d/hm-influxdb
+	rm -R /usr/local/etc/config/addons/www/hm-influxdb
+	rm -R /usr/local/etc/config/addons/hm-influxdb
+	;;
+
+  *)
+	echo "Usage: $0 {start|stop|restart|uninstall}" >&2
+	exit 1
+	;;
+esac
+
+exit 0
