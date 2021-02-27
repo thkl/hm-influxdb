@@ -19,18 +19,16 @@ Setup what to log:
 * click on the ccu menu item
 Here you have two options to select which data the addon is logging:
 
-1. Whitelist
+#### 1. Whitelist
 With whitelist settings you are able to log all datapoints of one type. As an example: You want to log all temperatures so add an entry with .ACTUAL_TEMPERATURE.
 In this case, every message form your devices which contains the datapoint with .ACTUAL_TEMPERATURE will be logged.
 
-2. Device specific
+#### 2. Device specific
 You can select specific datapoints from your devices. Please use the tree view to choose which datapoints you want to log
-
 
 Please note: If an datapoint will be logged thru a whitelist entry u can't dissable the logging by the device view for this entry.
 
 Please do not forget to save your settings.
-
 
 
 ### Internals
@@ -40,5 +38,6 @@ Due to this queue your logging entries may be delayed a little bit, but dont wor
 
 The addon will also add device or channel names into a entry so you are able to identify your time series by the device name.
 
+The current retention time for a database created by the addon are 30 days. This is a subject to change by a later version.
 
 
